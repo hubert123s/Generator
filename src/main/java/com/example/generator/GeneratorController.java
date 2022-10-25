@@ -9,6 +9,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/generator")
+
 class GeneratorController {
     private final GeneratorService generatorService;
 
@@ -23,7 +24,7 @@ class GeneratorController {
     }
 
     @GetMapping("/{id}")
-    void getGeneratorByIdFromFile(@PathVariable Long id) {
-        generatorService.findFileById(id);
+    List <String> getGeneratorByIdFromFile(@PathVariable Long id) {
+        return generatorService.findFileById(id);
     }
 }

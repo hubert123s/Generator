@@ -33,15 +33,8 @@ class GeneratorService {
         return generatorRepository.findAllByStatus(Status.ACTIVE);
     }
 
-    public void findFileById(Long id) {
-        generatorSystem.readFile(id);
+    public List<String> findFileById(Long id) {
+       return generatorSystem.readFile(id);
     }
 
-    public List<GeneratorParameters> getAll() {
-        return generatorRepository.findAll();
-    }
-
-    public GeneratorParameters saveGenerator(GeneratorParameters generatorParameters) {
-        return generatorRepository.save(generatorParameters);
-    }
 }

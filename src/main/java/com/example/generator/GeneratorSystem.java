@@ -46,14 +46,15 @@ public class GeneratorSystem {
             e.printStackTrace();
         }
     }
-    public void readFile(Long id) {
+    public List<String> readFile(Long id) {
+        List<String> listToShow =new ArrayList<>();
         if (generatorRepository.existsById(id)) {
             try {
                 BufferedReader reader =
                         new BufferedReader(new FileReader("id" + id + ".txt"));
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
+                listToShow.add(line);
                 }
 
             } catch (IOException e) {
@@ -62,7 +63,7 @@ public class GeneratorSystem {
         } else {
             throw new FileNotFoundException(id);
         }
-
+        return listToShow;
     }
     public Set<String> generateAllString(GeneratorParameters generatorParameters) {
         HashSet<String> stringSet = new HashSet<>();
