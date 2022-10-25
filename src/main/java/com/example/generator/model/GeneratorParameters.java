@@ -19,7 +19,7 @@ public class GeneratorParameters {
     @Min(value = 1, message = "Min value must be at least 1")
     private int min;
     private int max;
-    private Long numbersofString;
+    private Long numbersOfString;
     @NotBlank
     private String chars;
     @Enumerated(EnumType.STRING)

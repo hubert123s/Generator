@@ -22,7 +22,7 @@ class GeneratorService {
             throw new WrongMinAndMaxValueException(generatorParameters.getMin(),generatorParameters.getMax());
         } else if (charsSize == 0) {
             throw new NotFoundValidCharactersException(generatorParameters.getChars());
-        } else if (generatorParameters.getNumbersofString() >= generatorSystem.calculateMaxCharsGenerated(generatorParameters.getMax(), charsSize)) {
+        } else if (generatorParameters.getNumbersOfString() >= generatorSystem.calculateMaxCharsGenerated(generatorParameters.getMax(), charsSize)) {
             throw new TooManyStringsException();
         } else {
             generatorRepository.save(generatorParameters);

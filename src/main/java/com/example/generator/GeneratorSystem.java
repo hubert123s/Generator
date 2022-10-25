@@ -12,9 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
-//@Service
 @RequiredArgsConstructor
 @Component
 @EnableAsync
@@ -31,16 +29,16 @@ public class GeneratorSystem {
         if (generatorParameters != null) {
             generatorParameters.setStatus(Status.ACTIVE);
             generatorRepository.saveAndFlush(generatorParameters);
-            HashSet<String> stringHashSet = generateAllString(generatorParameters);
-            saveFile(stringHashSet, generatorParameters);
+            Set<String> stringSet = generateAllString(generatorParameters);
+            saveFile(stringSet, generatorParameters);
             generatorParameters.setStatus(Status.INACTIVE);
             generatorRepository.saveAndFlush(generatorParameters);
         }
     }
 
-    public void saveFile(HashSet<String> stringHashSet, GeneratorParameters generatorParameters) {
+    public void saveFile(Set<String> stringSet, GeneratorParameters generatorParameters) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("id" + generatorParameters.getId() + ".txt", true))) {
-            for (String singleString : stringHashSet) {
+            for (String singleString : stringSet) {
                 bufferedWriter.write(singleString);
                 bufferedWriter.write('\n');
             }
@@ -63,14 +61,13 @@ public class GeneratorSystem {
             }
         } else {
             throw new FileNotFoundException(id);
-            //throw new notfoundfileexception ( nie ma pliku o takim id)
         }
 
     }
-    public HashSet<String> generateAllString(GeneratorParameters generatorParameters) {
+    public Set<String> generateAllString(GeneratorParameters generatorParameters) {
         HashSet<String> stringSet = new HashSet<>();
         List<String> distinctString = selectedCharacters(generatorParameters.getChars());
-        while (stringSet.size() < generatorParameters.getNumbersofString()) {
+        while (stringSet.size() < generatorParameters.getNumbersOfString()) {
             String temp = generateString(distinctString, generatorParameters);
             if (!stringSet.contains(temp)) {
                 stringSet.add(temp);
@@ -83,8 +80,8 @@ public class GeneratorSystem {
         int length = random.nextInt(generatorParameters.getMin(), generatorParameters.getMax());
         int[] numbers = random.ints(0, generatorParameters.getMax()).distinct().limit(length).toArray();
         StringBuilder newString = new StringBuilder();
-        for (int i = 0; i < numbers.length; i++) {
-            newString.append(distinctString.get(numbers[i]));
+        for (int number : numbers) {
+            newString.append(distinctString.get(number));
         }
         return newString.toString();
     }
@@ -93,7 +90,7 @@ public class GeneratorSystem {
         return Arrays.stream(chars.trim().split(","))
                 .distinct()
                 .filter(m -> m.length() == 1)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public int calculateMaxCharsGenerated(int max, int charsSize) {
