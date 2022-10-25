@@ -49,9 +49,8 @@ public class GeneratorSystem {
     public List<String> readFile(Long id) {
         List<String> listToShow =new ArrayList<>();
         if (generatorRepository.existsById(id)) {
-            try {
-                BufferedReader reader =
-                        new BufferedReader(new FileReader("id" + id + ".txt"));
+            try(BufferedReader reader =
+                        new BufferedReader(new FileReader("id" + id + ".txt"))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                 listToShow.add(line);
@@ -70,9 +69,7 @@ public class GeneratorSystem {
         List<String> distinctString = selectedCharacters(generatorParameters.getChars());
         while (stringSet.size() < generatorParameters.getNumbersOfString()) {
             String temp = generateString(distinctString, generatorParameters);
-            if (!stringSet.contains(temp)) {
                 stringSet.add(temp);
-            }
         }
         return stringSet;
     }
