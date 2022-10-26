@@ -102,7 +102,7 @@ public class GeneratorSystem {
      */
     public String generateString(List<String> distinctString, GeneratorParameters generatorParameters) {
         int length = random.nextInt(generatorParameters.getMin(), generatorParameters.getMax());
-        int[] numbers = random.ints(0, generatorParameters.getMax()).distinct().limit(length).toArray();
+        int[] numbers = random.ints(0, generatorParameters.getMax()).limit(length).toArray();
         StringBuilder newString = new StringBuilder();
         for (int number : numbers) {
             newString.append(distinctString.get(number));
